@@ -1,0 +1,65 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nicegui-treebrowser"
+version = "0.1.0"
+description = "A NiceGUI element that browses, previews and downloads a server-side directory tree"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.13"
+authors = [{ name = "Owen Solberg", email = "pypi@odoublewen.anonaddy.com" }]
+keywords = ["nicegui", "file-browser", "directory-tree", "widget", "gui"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: User Interfaces",
+    "Typing :: Typed",
+]
+# NiceGUI before 3.0.4 pulls in a vbuild that calls pkgutil.find_loader,
+# removed in Python 3.14, so those releases cannot even be imported there.
+dependencies = [
+    "nicegui>=2.14; python_version < '3.14'",
+    "nicegui>=3.0.4; python_version >= '3.14'",
+]
+
+[project.urls]
+Homepage = "https://github.com/odoublewen/nicegui-treebrowser"
+Issues = "https://github.com/odoublewen/nicegui-treebrowser/issues"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.6",
+    "mypy>=1.11",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/nicegui_treebrowser"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+# Empty on purpose: NiceGUI 3.x's `user` fixture otherwise runpy's a main.py.
+# With no main file, pages declared with @ui.page inside a test module are used.
+main_file = ""
+
+[tool.ruff]
+line-length = 88
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+warn_unused_ignores = false
