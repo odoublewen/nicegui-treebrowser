@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "nicegui-treebrowser"
-version = "0.1.0"
+version = "0.1.1"
 description = "A NiceGUI element that browses, previews and downloads a server-side directory tree"
 readme = "README.md"
 license = "MIT"
