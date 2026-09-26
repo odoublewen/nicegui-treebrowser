@@ -1,5 +1,7 @@
 # nicegui-treebrowser
 
+[![tests](https://github.com/odoublewen/nicegui-treebrowser/actions/workflows/tests.yml/badge.svg?branch=develop)](https://github.com/odoublewen/nicegui-treebrowser/actions/workflows/tests.yml)
+
 A [NiceGUI](https://nicegui.io) element that renders a server-side directory as a
 browsable tree, previews the files it finds, and lets people download them
 individually or as a `.tar.gz`.
