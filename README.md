@@ -17,20 +17,17 @@ pip install nicegui-treebrowser     # or: uv add nicegui-treebrowser
 
 ### Supported versions
 
-| Python | NiceGUI |
-|---|---|
-| 3.13 | 2.14+ or 3.x |
-| 3.14 | 3.0.4+ |
+Python 3.12, 3.13 or 3.14, with NiceGUI 3.0.4 or newer.
 
 NiceGUI releases before 3.0.4 pull in a `vbuild` that calls `pkgutil.find_loader`,
-removed in Python 3.14, so they cannot be imported there at all. The dependency
-markers pick a workable floor for you.
+removed in Python 3.14, so they cannot be imported there at all. Rather than carry
+two dependency floors, this package simply requires 3.0.4 everywhere.
 
 Python 3.15 is not supported yet: `aiohttp`, which NiceGUI requires, has no 3.15
 wheels. Nothing in this package stands in the way — it should work as soon as the
 wheels land.
 
-The test suite runs against NiceGUI 2.14.1, 3.0.4 and 3.17.1.
+The test suite runs against NiceGUI 3.0.4 and 3.17.1.
 
 ## Quickstart
 

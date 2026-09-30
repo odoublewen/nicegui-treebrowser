@@ -250,9 +250,6 @@ class TreeBrowser(ui.column):
 
     # -- selection ---------------------------------------------------------
 
-    # ValueChangeEventArguments only became generic in NiceGUI 3.0; the
-    # subscript is safe on 2.x because `from __future__ import annotations`
-    # keeps it an unevaluated string.
     def _on_select(self, event: events.ValueChangeEventArguments[str | None]) -> None:
         key = event.value
         self._selected = key
