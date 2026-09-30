@@ -9,6 +9,40 @@ individually or as a `.tar.gz`.
 It is an ordinary NiceGUI element: it renders where you create it and accepts
 `.classes()`, `.style()`, `.props()` and `.move()` like anything else in `ui.*`.
 
+> **Not an official NiceGUI project.** This is an independent third-party package.
+> It is not affiliated with, endorsed by, or maintained by NiceGUI or Zauberzeug.
+> Bugs here belong on this repo's
+> [issue tracker](https://github.com/odoublewen/nicegui-treebrowser/issues), not
+> NiceGUI's.
+
+> **Think hard before putting this on a public-facing site.** It is built for
+> internal tools, dashboards and localhost apps — a trusted audience looking at a
+> directory you chose for them. It brings no access control of its own, so on an
+> unauthenticated page it hands every visitor read access to everything under
+> `root`. In particular:
+>
+> - **No authentication, no authorization, no audit trail.** Whatever middleware
+>   protects your NiceGUI app is the *only* thing protecting these files. There is
+>   no per-user view, no permission model, and no record of who read what.
+> - **Anything that lands under `root` later is exposed too.** The tree is read
+>   live from disk, so a secret another process writes into the directory tomorrow
+>   is served without you touching any code.
+> - **The tree leaks your filesystem layout**, including every filename, and — with
+>   the default `show_full_path=True` — the server's absolute path.
+> - **Archiving is unmetered work anyone can trigger.** "Download all" builds the
+>   entire `.tar.gz` in memory, and selecting a folder walks it recursively to size
+>   it. Both are synchronous, so one click on a large root can exhaust RAM or stall
+>   the event loop for every other user. Pass `allow_archive=False` on a big or
+>   untrusted-traffic root.
+>
+> If you do expose it publicly, put it behind authentication and point `root` at a
+> directory built to be published — one holding only what that audience may see —
+> rather than at a working directory you intend to keep tidy. Writing `exclude` as
+> the negation of an explicit allow-list (`lambda p: not is_publishable(p)`) fails
+> closed when something unexpected shows up; a deny-list does not. The
+> [Security](#security) section below documents the boundary the widget *does*
+> enforce, and the ways it can still be misused.
+
 ## Install
 
 ```bash
@@ -17,20 +51,17 @@ pip install nicegui-treebrowser     # or: uv add nicegui-treebrowser
 
 ### Supported versions
 
-| Python | NiceGUI |
-|---|---|
-| 3.13 | 2.14+ or 3.x |
-| 3.14 | 3.0.4+ |
+Python 3.12, 3.13 or 3.14, with NiceGUI 3.0.4 or newer.
 
 NiceGUI releases before 3.0.4 pull in a `vbuild` that calls `pkgutil.find_loader`,
-removed in Python 3.14, so they cannot be imported there at all. The dependency
-markers pick a workable floor for you.
+removed in Python 3.14, so they cannot be imported there at all. Rather than carry
+two dependency floors, this package simply requires 3.0.4 everywhere.
 
 Python 3.15 is not supported yet: `aiohttp`, which NiceGUI requires, has no 3.15
 wheels. Nothing in this package stands in the way — it should work as soon as the
 wheels land.
 
-The test suite runs against NiceGUI 2.14.1, 3.0.4 and 3.17.1.
+The test suite runs against NiceGUI 3.0.4 and 3.17.1.
 
 ## Quickstart
 

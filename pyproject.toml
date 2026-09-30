@@ -4,12 +4,12 @@ build-backend = "hatchling.build"
 
 [project]
 name = "nicegui-treebrowser"
-version = "0.1.1"
+version = "0.2.0"
 description = "A NiceGUI element that browses, previews and downloads a server-side directory tree"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
-requires-python = ">=3.13"
+requires-python = ">=3.12"
 authors = [{ name = "Owen Solberg", email = "pypi@odoublewen.anonaddy.com" }]
 keywords = ["nicegui", "file-browser", "directory-tree", "widget", "gui"]
 classifiers = [
@@ -17,6 +17,7 @@ classifiers = [
     "Environment :: Web Environment",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
     "Topic :: Software Development :: User Interfaces",
@@ -24,10 +25,7 @@ classifiers = [
 ]
 # NiceGUI before 3.0.4 pulls in a vbuild that calls pkgutil.find_loader,
 # removed in Python 3.14, so those releases cannot even be imported there.
-dependencies = [
-    "nicegui>=2.14; python_version < '3.14'",
-    "nicegui>=3.0.4; python_version >= '3.14'",
-]
+dependencies = ["nicegui>=3.0.4"]
 
 [project.urls]
 Homepage = "https://github.com/odoublewen/nicegui-treebrowser"
@@ -61,6 +59,6 @@ src = ["src", "tests"]
 select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM", "RUF"]
 
 [tool.mypy]
-python_version = "3.13"
+python_version = "3.12"
 strict = true
 warn_unused_ignores = false
